@@ -1,15 +1,4 @@
-function changeDisplayColor(color: string = "black")
-{
-  let display = document.querySelector("canvas");
-  if (display === null)
-    return;
+import { Chip8 } from "./chip8";
 
-  let context = display.getContext("2d");
-  if (context === null)
-    return;
-
-  context.fillStyle = color;
-  context.fillRect(0, 0, display.width, display.height);
-}
-
-changeDisplayColor();
+let chip8 = new Chip8();
+chip8.setPixel(32, 16, true);
