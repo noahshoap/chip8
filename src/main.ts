@@ -1,4 +1,3 @@
-import { Chip8 } from "./chip8";
+import { RomReader } from "./RomReader";
 
-let chip8 = new Chip8();
-chip8.setPixel(32, 16, true);
+const romReader = new RomReader();
