@@ -22,5 +22,11 @@ export class RomReader
     const file = inputElement.files[0];
 
     console.log(`File: ${file.name} uploaded.`);
+
+    let fileReader = new FileReader();
+    fileReader.readAsArrayBuffer(file);
+
+    this.intepreter = new Chip8();
+    this.intepreter.romBuffer = fileReader.result as ArrayBuffer;
   }
 }

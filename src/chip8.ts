@@ -5,6 +5,7 @@ export class Chip8
   canvas: HTMLCanvasElement;
   canvasContext: CanvasRenderingContext2D;
   displayScale: number;
+  romBuffer: ArrayBuffer | null = null;
 
   constructor()
   {
