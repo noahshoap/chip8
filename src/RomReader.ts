@@ -23,6 +23,16 @@ export class RomReader
 
     console.log(`File: ${file.name} uploaded.`);
 
-    this.interpreter = new Chip8();
+    const fr = new FileReader();
+
+    fr.onload = () => {
+      if (fr.result instanceof ArrayBuffer) {
+        this.interpreter = new Chip8();
+        this.interpreter.romBuffer = new Uint8Array(fr.result); // Convert the ArrayBuffer to Uint8Array
+        console.log("CHIP-8 ROM loaded.");
+    }
+    };
+
+    fr.readAsArrayBuffer(file);
   }
 }
