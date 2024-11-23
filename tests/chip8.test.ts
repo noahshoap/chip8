@@ -19,9 +19,19 @@ describe("Chip8 Tests", () => {
     // Fill display buffer with 1s
     chip8.displayBuffer.fill(1);
 
+    expect(arrayAllZero(chip8.displayBuffer)).toBe(false);
+
     // Call clear screen
     chip8.clearScreen();
 
     expect(arrayAllZero(chip8.displayBuffer)).toBe(true);
+  });
+
+  test("setPixel sets pixel", () => {
+    expect(arrayAllZero(chip8.displayBuffer)).toBe(true);
+
+    chip8.setPixel(0, 0, true);
+
+    expect(chip8.displayBuffer[0]).toBe(1);
   });
 });
