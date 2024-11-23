@@ -9,7 +9,7 @@ const TIMER_COUNT = 2;
 export class Chip8
 {
   display: IDisplay;
-  romBuffer: ArrayBuffer | null = null;
+  romBuffer: Uint8Array | null = null;
   displayBuffer = new Array<number>(DISPLAY_WIDTH * DISPLAY_HEIGHT).fill(0);
   stack = new Uint16Array(STACK_COUNT);
   memory = new Uint8Array(MEMORY_SIZE);
