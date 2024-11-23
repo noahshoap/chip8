@@ -23,30 +23,6 @@ export class RomReader
 
     console.log(`File: ${file.name} uploaded.`);
 
-    // Use a Promise to handle the asynchronous FileReader
-    const romBuffer = await this.readFileAsArrayBuffer(file);
-
     this.interpreter = new Chip8();
-    this.interpreter.romBuffer = romBuffer;
-  }
-
-  readFileAsArrayBuffer(file: File): Promise<ArrayBuffer> {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-  
-      fileReader.onload = () => {
-        if (fileReader.result) {
-          resolve(fileReader.result as ArrayBuffer);
-        } else {
-          reject(new Error("File reading failed."));
-        }
-      };
-  
-      fileReader.onerror = () => {
-        reject(new Error(`Error reading file: ${fileReader.error?.message}`));
-      };
-  
-      fileReader.readAsArrayBuffer(file);
-    });
   }
 }
