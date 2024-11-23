@@ -1,9 +1,10 @@
 import { Chip8 } from "./chip8";
+import { Display } from "./Display";
 
 export class RomReader
 {
   input: HTMLInputElement;
-  interpreter: Chip8;
+  interpreter: Chip8 | null = null;
 
   constructor()
   {
@@ -11,7 +12,6 @@ export class RomReader
     if (input === null) throw new Error("Could not get input element.");
     this.input = input;
     this.input.addEventListener("change", this.readFile);
-    this.interpreter = new Chip8();
   }
 
   async readFile(event: Event)
@@ -27,7 +27,7 @@ export class RomReader
 
     fr.onload = () => {
       if (fr.result instanceof ArrayBuffer) {
-        this.interpreter = new Chip8();
+        this.interpreter = new Chip8(new Display());
         this.interpreter.romBuffer = new Uint8Array(fr.result); // Convert the ArrayBuffer to Uint8Array
         console.log("CHIP-8 ROM loaded.");
     }
