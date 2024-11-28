@@ -51,4 +51,28 @@ export class Chip8
     this.stack[this.sp] = this.pc;
     this.pc = address;
   }
+
+  skipIfEqual(register: number, kk: number)
+  {
+    if (this.vRegisters[register] === kk)
+    {
+      this.pc += 2;
+    }
+  }
+
+  skipIfRegistersEqual(register1: number, register2: number)
+  {
+    if (this.vRegisters[register1] === this.vRegisters[register2])
+    {
+      this.pc += 2;
+    }
+  }
+
+  skipIfNotEqual(register: number, kk: number)
+  {
+    if (this.vRegisters[register] !== kk)
+    {
+      this.pc += 2;
+    }
+  }
 };

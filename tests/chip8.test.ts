@@ -93,4 +93,94 @@ describe("Chip8 Tests", () => {
 
     expect(chip8.pc).toBe(address);
   });
+
+  test("skipIfEqual sets pc to expected value if equal", () => {
+    const register = 0;
+    const number = 5;
+    const startPc = 0;
+    chip8.vRegisters[register] = number;
+
+    expect(chip8.vRegisters[register]).toBe(number);
+    expect(chip8.pc).toBe(startPc);
+
+    chip8.skipIfEqual(register, number);
+
+    expect(chip8.pc).toBe(startPc + 2);
+  });
+
+  test("skipIfEqual doesn't change pc if not equal", () => {
+    const register = 0;
+    const number = 5;
+    const startPc = 0;
+    chip8.vRegisters[register] = number;
+
+    expect(chip8.vRegisters[register]).toBe(number);
+    expect(chip8.pc).toBe(startPc);
+
+    chip8.skipIfEqual(register, 0);
+
+    expect(chip8.pc).toBe(startPc);
+  });
+
+  test("skipIfNotEqual sets pc to expected value if not equal", () => {
+    const register = 0;
+    const number = 5;
+    const startPc = 0;
+    chip8.vRegisters[register] = number;
+
+    expect(chip8.vRegisters[register]).toBe(number);
+    expect(chip8.pc).toBe(startPc);
+
+    chip8.skipIfNotEqual(register, 0);
+
+    expect(chip8.pc).toBe(startPc + 2);
+  });
+
+  test("skipIfNotEqual doesn't change pc if equal", () => {
+    const register = 0;
+    const number = 5;
+    const startPc = 0;
+    chip8.vRegisters[register] = number;
+
+    expect(chip8.vRegisters[register]).toBe(number);
+    expect(chip8.pc).toBe(startPc);
+
+    chip8.skipIfNotEqual(register, number);
+
+    expect(chip8.pc).toBe(startPc);
+  });
+
+  test("skipIfRegistersEqual sets pc to expected value if equal", () => {
+    const register1 = 0;
+    const register2 = 1;
+    const number = 5;
+    const startPc = 0;
+    chip8.vRegisters[register1] = number;
+    chip8.vRegisters[register2] = number;
+
+    expect(chip8.vRegisters[register1]).toBe(number);
+    expect(chip8.vRegisters[register2]).toBe(number);
+    expect(chip8.pc).toBe(startPc);
+
+    chip8.skipIfRegistersEqual(register1, register2);
+
+    expect(chip8.pc).toBe(startPc + 2);
+  });
+
+  test("skipIfRegistersEqual doesn't change pc if not equal", () => {
+    const register1 = 0;
+    const register2 = 1;
+    const number = 5;
+    const startPc = 0;
+    chip8.vRegisters[register1] = number;
+    chip8.vRegisters[register2] = 0;
+
+    expect(chip8.vRegisters[register1]).toBe(number);
+    expect(chip8.vRegisters[register2]).toBe(0);
+    expect(chip8.pc).toBe(startPc);
+
+    chip8.skipIfRegistersEqual(register1, register2);
+
+    expect(chip8.pc).toBe(startPc);
+  });
 });
