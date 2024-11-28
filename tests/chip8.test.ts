@@ -34,4 +34,63 @@ describe("Chip8 Tests", () => {
 
     expect(chip8.displayBuffer[0]).toBe(1);
   });
+
+  test("returnFromSubroutine decrements sp", () => {
+    expect(chip8.sp).toBe(0);
+    chip8.sp = 1;
+
+    expect(chip8.sp).toBe(1);
+
+    chip8.returnFromSubroutine();
+
+    expect(chip8.sp).toBe(0);
+  });
+
+  test("returnFromSubroutine sets pc", () => {
+    const address = 5;
+    expect(chip8.sp).toBe(0);
+    expect(chip8.pc).toBe(0);
+
+    chip8.stack[1] = address;
+    chip8.sp = 1;
+
+    chip8.returnFromSubroutine();
+
+    expect(chip8.pc).toBe(address)
+  });
+
+  test("jumpToAddress sets pc", () => {
+    const address = 5;
+    expect(chip8.pc).toBe(0);
+
+    chip8.jumpToAddress(address);
+
+    expect(chip8.pc).toBe(address)
+  });
+
+  test("callSubroutine stores current pc on stack", () => {
+    const address = 5;
+    const oldPc = 4;
+    expect(chip8.sp).toBe(0);
+
+    chip8.pc = oldPc;
+    expect(chip8.pc).toBe(oldPc);
+
+    chip8.callSubroutine(address);
+
+    expect(chip8.stack[chip8.sp]).toBe(oldPc);
+  });
+
+  test("callSubroutine sets pc to address", () => {
+    const address = 5;
+    const oldPc = 4;
+    expect(chip8.sp).toBe(0);
+
+    chip8.pc = oldPc;
+    expect(chip8.pc).toBe(oldPc);
+
+    chip8.callSubroutine(address);
+
+    expect(chip8.pc).toBe(address);
+  });
 });

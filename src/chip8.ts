@@ -33,4 +33,22 @@ export class Chip8
   {
     this.displayBuffer.fill(0);
   }
+
+  returnFromSubroutine()
+  {
+    this.pc = this.stack[this.sp];
+    this.sp--;
+  }
+
+  jumpToAddress(address: number)
+  {
+    this.pc = address;
+  }
+
+  callSubroutine(address: number)
+  {
+    this.sp++;
+    this.stack[this.sp] = this.pc;
+    this.pc = address;
+  }
 };
