@@ -183,4 +183,35 @@ describe("Chip8 Tests", () => {
 
     expect(chip8.pc).toBe(startPc);
   });
+
+  test("loadIntoRegister loads into register", () => {
+    chip8.vRegisters[0] = 0;
+    expect(chip8.vRegisters[0]).toBe(0);
+
+    const number = 5;
+    chip8.loadIntoRegister(0, number);
+
+    expect(chip8.vRegisters[0]).toBe(number);
+  });
+
+  test("addToRegister adds to register", () => {
+    chip8.vRegisters[0] = 0;
+    expect(chip8.vRegisters[0]).toBe(0);
+
+    const number = 3;
+    chip8.addToRegister(0, number);
+
+    expect(chip8.vRegisters[0]).toBe(number);
+  });
+
+  test("loadIntoRegister loads into register", () => {
+    const number = 10;
+    chip8.vRegisters[0] = 0;
+    chip8.vRegisters[1] = number;
+    expect(chip8.vRegisters[0]).toBe(0);
+    expect(chip8.vRegisters[1]).toBe(number);
+    chip8.loadYRegisterIntoXRegister(0, 1);
+    expect(chip8.vRegisters[0]).toBe(number);
+  });
+  
 });

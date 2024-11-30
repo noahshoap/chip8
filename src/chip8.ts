@@ -75,4 +75,19 @@ export class Chip8
       this.pc += 2;
     }
   }
+
+  loadIntoRegister(register: number, kk: number)
+  {
+    this.vRegisters[register] = kk;
+  }
+
+  addToRegister(register: number, kk: number)
+  {
+    this.vRegisters[register] += kk;
+  }
+
+  loadYRegisterIntoXRegister(xRegister: number, yRegister: number)
+  {
+    this.vRegisters[xRegister] = this.vRegisters[yRegister];
+  }
 };
