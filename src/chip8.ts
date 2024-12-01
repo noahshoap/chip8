@@ -90,4 +90,9 @@ export class Chip8
   {
     this.vRegisters[xRegister] = this.vRegisters[yRegister];
   }
+
+  orRegister(xRegister: number, yRegister: number)
+  {
+    this.vRegisters[xRegister] |= this.vRegisters[yRegister];
+  }
 };

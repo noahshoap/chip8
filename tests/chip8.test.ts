@@ -214,4 +214,13 @@ describe("Chip8 Tests", () => {
     expect(chip8.vRegisters[0]).toBe(number);
   });
   
+  test("orRegister performs bitwise or on registers", () => {
+    chip8.vRegisters[0] = 3;
+    chip8.vRegisters[1] = 4;
+
+    chip8.orRegister(0, 1);
+
+    expect(chip8.vRegisters[0]).toBe(7);
+  });
+
 });
