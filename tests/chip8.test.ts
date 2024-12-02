@@ -223,4 +223,22 @@ describe("Chip8 Tests", () => {
     expect(chip8.vRegisters[0]).toBe(7);
   });
 
+  test("xorRegister performs bitwise xor on registers", () => {
+    chip8.vRegisters[0] = 3;
+    chip8.vRegisters[1] = 7;
+
+    chip8.xorRegister(0, 1);
+
+    expect(chip8.vRegisters[0]).toBe(4);
+  });
+
+  test("andRegister performs bitwise and on registers", () => {
+    chip8.vRegisters[0] = 3;
+    chip8.vRegisters[1] = 7;
+
+    chip8.andRegister(0, 1);
+
+    expect(chip8.vRegisters[0]).toBe(3);
+  });
+
 });

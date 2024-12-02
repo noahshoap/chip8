@@ -95,4 +95,14 @@ export class Chip8
   {
     this.vRegisters[xRegister] |= this.vRegisters[yRegister];
   }
+
+  andRegister(xRegister: number, yRegister: number)
+  {
+    this.vRegisters[xRegister] &= this.vRegisters[yRegister];
+  }
+
+  xorRegister(xRegister: number, yRegister: number)
+  {
+    this.vRegisters[xRegister] ^= this.vRegisters[yRegister];
+  }
 };
