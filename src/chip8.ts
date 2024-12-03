@@ -81,6 +81,11 @@ export class Chip8
     this.vRegisters[register] = kk;
   }
 
+  loadIntoIRegister(address: number)
+  {
+    this.iRegister = address;
+  }
+
   addToRegister(register: number, kk: number)
   {
     this.vRegisters[register] += kk;

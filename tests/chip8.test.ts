@@ -241,4 +241,10 @@ describe("Chip8 Tests", () => {
     expect(chip8.vRegisters[0]).toBe(3);
   });
 
+
+  test("loadIntoIRegister loads into iRegister", () => {
+    expect(chip8.iRegister).toBe(0);
+    chip8.loadIntoIRegister(5);
+    expect(chip8.iRegister).toBe(5);
+  });
 });
