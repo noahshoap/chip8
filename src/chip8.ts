@@ -110,4 +110,18 @@ export class Chip8
   {
     this.vRegisters[xRegister] ^= this.vRegisters[yRegister];
   }
+
+  addRegisters(xRegister: number, yRegister: number)
+  {
+    let result = this.vRegisters[xRegister] + this.vRegisters[yRegister];
+
+    if (result >= 255)
+    {
+      this.vRegisters[0xF] = 1;
+    }
+
+    result &= 255;
+
+    this.vRegisters[xRegister] = result;
+  }
 };

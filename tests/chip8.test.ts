@@ -247,4 +247,32 @@ describe("Chip8 Tests", () => {
     chip8.loadIntoIRegister(5);
     expect(chip8.iRegister).toBe(5);
   });
+
+  test("addRegisters only keeps lowest 8 bits and sets carry flag", () => {
+    chip8.vRegisters[0] = 255;
+    chip8.vRegisters[1] = 255;
+
+    expect(chip8.vRegisters[0xF]).toBe(0);
+    expect(chip8.vRegisters[0]).toBe(255);
+    expect(chip8.vRegisters[1]).toBe(255);
+
+    chip8.addRegisters(0, 1);
+
+    expect(chip8.vRegisters[0]).toBe(254);
+    expect(chip8.vRegisters[0xF]).toBe(1);
+  });
+
+  test("addRegisters adds as expected", () => {
+    chip8.vRegisters[0] = 5;
+    chip8.vRegisters[1] = 5;
+
+    expect(chip8.vRegisters[0xF]).toBe(0);
+    expect(chip8.vRegisters[0]).toBe(5);
+    expect(chip8.vRegisters[1]).toBe(5);
+
+    chip8.addRegisters(0, 1);
+
+    expect(chip8.vRegisters[0]).toBe(10);
+    expect(chip8.vRegisters[0xF]).toBe(0);
+  });
 });
