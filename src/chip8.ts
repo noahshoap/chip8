@@ -119,9 +119,21 @@ export class Chip8
     {
       this.vRegisters[0xF] = 1;
     }
+    else
+      this.vRegisters[0xF] = 0;
 
     result &= 255;
 
     this.vRegisters[xRegister] = result;
+  }
+
+  subRegisters(xRegister: number, yRegister: number)
+  {
+    if (this.vRegisters[xRegister] > this.vRegisters[yRegister])
+      this.vRegisters[0xF] = 1;
+    else
+      this.vRegisters[0xF] = 0;
+
+    this.vRegisters[xRegister] -= this.vRegisters[yRegister];
   }
 };

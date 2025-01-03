@@ -275,4 +275,18 @@ describe("Chip8 Tests", () => {
     expect(chip8.vRegisters[0]).toBe(10);
     expect(chip8.vRegisters[0xF]).toBe(0);
   });
+
+  test("subRegisters sets not carry as expected", () => {
+    chip8.vRegisters[0] = 6;
+    chip8.vRegisters[1] = 5;
+
+    expect(chip8.vRegisters[0xF]).toBe(0);
+    expect(chip8.vRegisters[0]).toBe(6);
+    expect(chip8.vRegisters[1]).toBe(5);
+
+    chip8.subRegisters(0, 1);
+
+    expect(chip8.vRegisters[0]).toBe(1);
+    expect(chip8.vRegisters[0xF]).toBe(1);
+  });
 });
