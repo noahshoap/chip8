@@ -289,4 +289,48 @@ describe("Chip8 Tests", () => {
     expect(chip8.vRegisters[0]).toBe(1);
     expect(chip8.vRegisters[0xF]).toBe(1);
   });
+
+  test("checkLeastSignificant sets VF to 1 when least sig bit is 1 and divides properly", () => {
+    chip8.vRegisters[0] = 7;
+
+    expect(chip8.vRegisters[0xF]).toBe(0);
+
+    chip8.checkLeastSignificant(0);
+
+    expect(chip8.vRegisters[0xF]).toBe(1);
+    expect(chip8.vRegisters[0]).toBe(3);
+  });
+
+  test("checkLeastSignificant does not set VF to 1 when least sig bit is 1 and divides properly", () => {
+    chip8.vRegisters[0] = 6;
+
+    expect(chip8.vRegisters[0xF]).toBe(0);
+
+    chip8.checkLeastSignificant(0);
+
+    expect(chip8.vRegisters[0xF]).toBe(0);
+    expect(chip8.vRegisters[0]).toBe(3);
+  });
+
+  test("checkMostSignificant sets VF to 1 when most sig bit is 1 and multiplies properly", () => {
+    chip8.vRegisters[0] = 132;
+
+    expect(chip8.vRegisters[0xF]).toBe(0);
+
+    chip8.checkMostSignificant(0);
+
+    expect(chip8.vRegisters[0xF]).toBe(1);
+    expect(chip8.vRegisters[0]).toBe(8);
+  });
+
+  test("checkMostSignificant sets VF to 1 when most sig bit is 1 and multiplies properly", () => {
+    chip8.vRegisters[0] = 2;
+
+    expect(chip8.vRegisters[0xF]).toBe(0);
+
+    chip8.checkMostSignificant(0);
+
+    expect(chip8.vRegisters[0xF]).toBe(0);
+    expect(chip8.vRegisters[0]).toBe(4);
+  });
 });

@@ -5,6 +5,7 @@ const MEMORY_SIZE = 4096;
 const V_REGISTER_COUNT = 16;
 const STACK_COUNT = 16;
 const TIMER_COUNT = 2;
+const UINT8_MAX_VALUE = 0xFF;
 
 export class Chip8
 {
@@ -54,25 +55,31 @@ export class Chip8
 
   skipIfEqual(register: number, kk: number)
   {
-    if (this.vRegisters[register] === kk)
+    const isRegisterEqualToKk = this.vRegisters[register] === kk;
+
+    if (isRegisterEqualToKk)
     {
-      this.pc += 2;
+      this.skipInstruction();
     }
   }
 
   skipIfRegistersEqual(register1: number, register2: number)
   {
-    if (this.vRegisters[register1] === this.vRegisters[register2])
+    const areRegistersEqual = this.vRegisters[register1] === this.vRegisters[register2];
+
+    if (areRegistersEqual)
     {
-      this.pc += 2;
+      this.skipInstruction();
     }
   }
 
   skipIfNotEqual(register: number, kk: number)
   {
-    if (this.vRegisters[register] !== kk)
+    const isRegisterEqualToKk = this.vRegisters[register] === kk;
+
+    if (isRegisterEqualToKk === false)
     {
-      this.pc += 2;
+      this.skipInstruction();
     }
   }
 
@@ -113,27 +120,62 @@ export class Chip8
 
   addRegisters(xRegister: number, yRegister: number)
   {
-    let result = this.vRegisters[xRegister] + this.vRegisters[yRegister];
+    let sum = this.vRegisters[xRegister] + this.vRegisters[yRegister];
+    let isResultTooLargeFor8Bits = sum > UINT8_MAX_VALUE;
 
-    if (result >= 255)
-    {
-      this.vRegisters[0xF] = 1;
-    }
-    else
-      this.vRegisters[0xF] = 0;
-
-    result &= 255;
-
-    this.vRegisters[xRegister] = result;
+    this.setVFRegister(isResultTooLargeFor8Bits ? 1 : 0);
+    this.vRegisters[xRegister] = this.wrapTo8Bits(sum);
   }
 
   subRegisters(xRegister: number, yRegister: number)
   {
-    if (this.vRegisters[xRegister] > this.vRegisters[yRegister])
-      this.vRegisters[0xF] = 1;
-    else
-      this.vRegisters[0xF] = 0;
+    let isXRegisterLarger = (this.vRegisters[xRegister] > this.vRegisters[yRegister]);
+
+    this.setVFRegister(isXRegisterLarger ? 1 : 0);
 
     this.vRegisters[xRegister] -= this.vRegisters[yRegister];
+  }
+
+  checkLeastSignificant(xRegister: number)
+  {
+    const leastSignificantBit = 1;
+    let bitValue = this.vRegisters[xRegister] & leastSignificantBit;
+
+    this.setVFRegister(bitValue);
+    this.divideRegisterByTwo(xRegister);
+  }
+
+  checkMostSignificant(xRegister: number)
+  {
+    const mostSignificantBit = 128;
+    let bitValue = this.vRegisters[xRegister] & mostSignificantBit;
+
+    this.setVFRegister(bitValue === 0 ? 0 : 1);
+    this.multiplyRegisterByTwo(xRegister);
+  }
+
+  private setVFRegister(value: number)
+  {
+    this.vRegisters[0xF] = value;
+  }
+
+  private divideRegisterByTwo(register: number)
+  {
+    this.vRegisters[register] /= 2;
+  }
+
+  private multiplyRegisterByTwo(register: number)
+  {
+    this.vRegisters[register] = this.wrapTo8Bits(this.vRegisters[register] * 2);
+  }
+
+  private skipInstruction()
+  {
+    this.pc += 2;
+  }
+
+  private wrapTo8Bits(num: number) : number
+  {
+    return num & UINT8_MAX_VALUE;
   }
 };
